@@ -25,11 +25,29 @@ io.on('connection', (socket) => {
     // Recives messages
     socket.on('createMessage', (msg) => {
         console.log('Message: ', msg)
-        io.emit('NewMessage', {
-            from: msg.from,
-            text: msg.text,
-            createdAt: new Date().getTime()
+
+        socket.emit('newMessage', {
+            from: 'Admin',
+            text: 'Welcome to the app',
         })
+
+        socket.broadcast.emit('newMessage', {
+            from: 'Admin',
+            text: 'New user has connected',
+            createdAt: new Date().getDate()
+        })
+        
+        // io.emit('NewMessage', {
+        //     from: msg.from,
+        //     text: msg.text,
+        //     createdAt: new Date().getTime()
+        // })
+
+        // socket.broadcast.emit('newMessage', {
+        //     from: msg.from,
+        //     text: msg.text,
+        //     createdAt: new Date().getTime()
+        // })
     })
 
     // Sends message to client
