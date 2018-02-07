@@ -7,7 +7,8 @@ const pubPath = path.join(__dirname, '../public')
 const port = process.env.PORT || 3000;
 
 const {
-    generateMessage
+    generateMessage,
+    generateLocationMessage
 } = require('./utils/message')
 
 let app = express()
@@ -34,6 +35,10 @@ io.on('connection', (socket) => {
 
         // (reject, resolve)
         callback(undefined, 'Works!')
+    })
+
+    socket.on('createLocationMessage', (coords) => {
+        io.emit('newLocationMessage', generateLocationMessage('Admin', coords.latitude, coords.longitude))
     })
 
     // Sends message to client
