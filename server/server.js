@@ -27,10 +27,13 @@ io.on('connection', (socket) => {
     })
 
     // Recives messages
-    socket.on('createMessage', (msg) => {
+    socket.on('createMessage', (msg, callback) => {
         console.log('Message: ', msg)
 
         io.emit('newMessage', generateMessage(msg.from, msg.text))
+
+        // (reject, resolve)
+        callback(undefined, 'Works!')
     })
 
     // Sends message to client
