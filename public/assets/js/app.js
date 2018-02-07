@@ -30,12 +30,13 @@ socket.on('newLocationMessage', (message) => {
 
 $('#message-form').on('submit', (e) => {
     e.preventDefault();
-    
+    let msg = $('[name=message]')
+
     socket.emit('createMessage', {
         from: 'Usheaheer_Form',
-        text: $('[name=message]').val()
-    }, function() {
-        
+        text: msg.val()
+    }, function () {
+        msg.val('')
     })
 })
 
@@ -43,9 +44,9 @@ let locButton = $('#location-button')
 
 locButton.on('click', () => {
     if (!navigator.geolocation) return alert('NO GEOLOCATION')
-
+    locButton.attr('disabled', 'disabled').text('Sending Location')
     navigator.geolocation.getCurrentPosition((position) => {
-
+        locButton.removeAttr('disabled').text('Send Location')
         let longitude = position.coords.longitude
         let latitude = position.coords.latitude
 
@@ -55,5 +56,6 @@ locButton.on('click', () => {
         })
     }, () => {
         alert('Cannot fetch location')
+        locButton.removeAttr('disabled').text('Send Location')
     })
 })

@@ -9,18 +9,23 @@
   <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 
-<body>
-  <p>Welcome to my chat</p>
+<body class='chat'>
+  <div class='chat__sidebar'>
+    <h3>People</h3>
+    <div id='users'></div>
+  </div>
 
-  <ol id="message-output"></ol>
+  <div class='chat__main'>
+    <ol id="message-output" class='chat__messages'></ol>
 
-<div id="footer">
-  <form id="message-form">
-    <input type="text" name="message" placeholder="Message">
-    <button>Send</button>
-  </form>
-  <button id="location-button">Send location</button>
-</div>
+    <div class='chat__footer'>
+      <form id="message-form">
+        <input type="text" name="message" placeholder="Message" autofocus autocomplete="off">
+        <button>Send</button>
+      </form>
+      <button id="location-button">Send Location</button>
+    </div>
+  </div>
   <!-- connection -->
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

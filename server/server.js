@@ -34,7 +34,7 @@ io.on('connection', (socket) => {
         io.emit('newMessage', generateMessage(msg.from, msg.text))
 
         // (reject, resolve)
-        callback(undefined, 'Works!')
+        callback()
     })
 
     socket.on('createLocationMessage', (coords) => {
