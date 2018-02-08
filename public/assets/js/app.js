@@ -10,9 +10,9 @@ function scrollToBottom() {
     let messageHeight = message.innerHeight()
     let lastMessageHeight = message.prev().innerHeight()
 
-    if (clientHeight + scrollTop + messageHeight + lastMessageHeight >= scrollHeight) {
-        output.scrollTop(scrollHeight)
-    }
+    let totalHeight = clientHeight + scrollTop + messageHeight + lastMessageHeight
+
+    if (totalHeight >= scrollHeight) output.scrollTop(scrollHeight)
     
 }
 
