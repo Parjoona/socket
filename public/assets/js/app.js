@@ -10,25 +10,28 @@ socket.on('disconnect', function () {
 
 socket.on('newMessage', function (message) {
     let formatTime = moment(message.createdAt).format('h:mm a')
-    $('<li>', {
-        text: `${message.from}, ${formatTime}: ${message.text}`
-    }).appendTo($('#message-output'))
+
+    let template = $('#message-template').html()
+    let html = Mustache.render(template, {
+        from: message.from,
+        text: message.text,
+        createdAt: formatTime
+    })
+
+    $('#message-output').append(html)
 })
 
 socket.on('newLocationMessage', (message) => {
     let formatTime = moment(message.createdAt).format('h:mm a')
-
-    let li = $('<li>', {
-        text: `${message.from}, ${formatTime}: `
-    })
-    
-    let a = $('<a>', {
-        text: 'My location',
-        target: `_blank`,
-        href: message.url
+        
+    let template = $('#location-template').html()
+    let html = Mustache.render(template, {
+        from: message.from,
+        url: message.url,
+        createdAt: formatTime
     })
 
-    li.append(a).appendTo($('#message-output'))
+    $('#message-output').append(html)
 })
 
 $('#message-form').on('submit', (e) => {
@@ -36,7 +39,7 @@ $('#message-form').on('submit', (e) => {
     let msg = $('[name=message]')
 
     socket.emit('createMessage', {
-        from: 'Usheaheer_Form',
+        from: 'Usher',
         text: msg.val()
     }, function () {
         msg.val('')
