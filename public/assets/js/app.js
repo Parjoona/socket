@@ -9,16 +9,19 @@ socket.on('disconnect', function () {
 })
 
 socket.on('newMessage', function (message) {
-    console.log('Message: ', message)
+    let formatTime = moment(message.createdAt).format('h:mm a')
     $('<li>', {
-        text: `${message.from}: ${message.text}`
+        text: `${message.from}, ${formatTime}: ${message.text}`
     }).appendTo($('#message-output'))
 })
 
 socket.on('newLocationMessage', (message) => {
+    let formatTime = moment(message.createdAt).format('h:mm a')
+
     let li = $('<li>', {
-        text: `${message.from}: `
+        text: `${message.from}, ${formatTime}: `
     })
+    
     let a = $('<a>', {
         text: 'My location',
         target: `_blank`,
