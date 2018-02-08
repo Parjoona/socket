@@ -11,6 +11,10 @@ const {
     generateLocationMessage
 } = require('./utils/message')
 
+const {
+    isRealString
+} = require('./utils/validation')
+
 let app = express()
 
 // createServer takes req, res callback
@@ -35,6 +39,12 @@ io.on('connection', (socket) => {
 
         // (reject, resolve)
         callback()
+    })
+
+    socket.on('join', (param, callback) => {
+        if (!isRealString(param.name) && !isRealString(param.room)) {
+            callback('Name and roomname is not valid')
+        }
     })
 
     socket.on('createLocationMessage', (coords) => {

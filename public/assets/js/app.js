@@ -13,12 +13,21 @@ function scrollToBottom() {
     let totalHeight = clientHeight + scrollTop + messageHeight + lastMessageHeight
 
     if (totalHeight >= scrollHeight) output.scrollTop(scrollHeight)
-    
+
 }
 
 
 socket.on('connect', function () {
     console.log('Found server, connected')
+    let param = $.deparam(window.location.search)
+
+    socket.emit('join', param, (err) => {
+        if (err) {
+            window.location.href = '/'
+        } else {
+            console.log('No error');
+        }
+    })
 })
 
 socket.on('disconnect', function () {
@@ -41,7 +50,7 @@ socket.on('newMessage', function (message) {
 
 socket.on('newLocationMessage', (message) => {
     let formatTime = moment(message.createdAt).format('h:mm a')
-        
+
     let template = $('#location-template').html()
     let html = Mustache.render(template, {
         from: message.from,
