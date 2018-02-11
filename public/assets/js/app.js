@@ -34,6 +34,19 @@ socket.on('disconnect', function () {
     console.log('disconnected')
 })
 
+socket.on('updateUserList', (arr) => {
+    let ol = $('<ol>')
+
+    arr.forEach((user) => {
+        
+        ol.append($('<li>', {
+            text: user
+        }))
+
+        $('#users').html(ol)
+    })
+})
+
 socket.on('newMessage', function (message) {
     let formatTime = moment(message.createdAt).format('h:mm a')
 
